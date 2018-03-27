@@ -7,6 +7,7 @@
 //
 
 #import "ViewController.h"
+#import "AppDelegate.h"
 #import "Restaurant.h"
 #import "RestaurantManager.h"
 #import "Waiter.h"
@@ -14,9 +15,12 @@
 static NSString * const kCellIdentifier = @"CellIdentifier";
 
 @interface ViewController ()
+
 @property IBOutlet UITableView *tableView;
-@property (nonatomic, retain) NSArray *waiters;
+@property (nonatomic, retain) NSMutableArray *waiters;
+
 @end
+
 
 @implementation ViewController
 
@@ -24,12 +28,11 @@ static NSString * const kCellIdentifier = @"CellIdentifier";
     [super viewDidLoad];
     [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:kCellIdentifier];
     NSSortDescriptor *sortByName = [[NSSortDescriptor alloc]initWithKey:@"name" ascending:YES];
-    self.waiters = [[[RestaurantManager sharedManager]currentRestaurant].staff sortedArrayUsingDescriptors:@[sortByName]];
+    self.waiters = [[[[RestaurantManager sharedManager]currentRestaurant].staff sortedArrayUsingDescriptors:@[sortByName]] mutableCopy];
 }
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
 
 
@@ -54,7 +57,21 @@ static NSString * const kCellIdentifier = @"CellIdentifier";
 # pragma mark - Actions
 
 - (IBAction)addWaiter:(UIBarButtonItem *)sender {
-    NSLog(@"New waiter!");
+    AppDelegate *appDelegate = [UIApplication sharedApplication].delegate;
+    
+    NSEntityDescription *restaurantEntity = [NSEntityDescription entityForName:@"Restaurant" inManagedObjectContext:appDelegate.managedObjectContext];
+    Restaurant *restaurant = [[Restaurant alloc] initWithEntity:restaurantEntity insertIntoManagedObjectContext:appDelegate.managedObjectContext];
+    
+    NSEntityDescription *waiterEntity = [NSEntityDescription entityForName:@"Waiter" inManagedObjectContext:appDelegate.managedObjectContext];
+    Waiter *newWaiter = [[Waiter alloc]initWithEntity:waiterEntity insertIntoManagedObjectContext:appDelegate.managedObjectContext];
+    newWaiter.name = NSLocalizedString(@"Jane Doe", nil);
+    [restaurant addStaffObject:newWaiter];
+    
+    NSError *error = nil;
+    [appDelegate.managedObjectContext save:&error];
+    
+    [self.waiters addObject:newWaiter];
+    [self.tableView reloadData];
 }
 
 @end
