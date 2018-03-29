@@ -57,20 +57,10 @@ static NSString * const kCellIdentifier = @"CellIdentifier";
 # pragma mark - Actions
 
 - (IBAction)addWaiter:(UIBarButtonItem *)sender {
-    AppDelegate *appDelegate = [UIApplication sharedApplication].delegate;
-    
-    NSEntityDescription *restaurantEntity = [NSEntityDescription entityForName:@"Restaurant" inManagedObjectContext:appDelegate.managedObjectContext];
-    Restaurant *restaurant = [[Restaurant alloc] initWithEntity:restaurantEntity insertIntoManagedObjectContext:appDelegate.managedObjectContext];
-    
-    NSEntityDescription *waiterEntity = [NSEntityDescription entityForName:@"Waiter" inManagedObjectContext:appDelegate.managedObjectContext];
-    Waiter *newWaiter = [[Waiter alloc]initWithEntity:waiterEntity insertIntoManagedObjectContext:appDelegate.managedObjectContext];
-    newWaiter.name = NSLocalizedString(@"Jane Doe", nil);
-    [restaurant addStaffObject:newWaiter];
-    
-    NSError *error = nil;
-    [appDelegate.managedObjectContext save:&error];
-    
+    // TODO: Alert to collect name
+    Waiter *newWaiter = [[RestaurantManager sharedManager] newWaiter:@"Jane Doe"];
     [self.waiters addObject:newWaiter];
+    // TODO: Sort by name before reload
     [self.tableView reloadData];
 }
 

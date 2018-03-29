@@ -29,7 +29,7 @@
     return sharedManager;
 }
 
--(Restaurant*)currentRestaurant {
+- (Restaurant*)currentRestaurant {
     if(self.restaurant == nil)
     {
         Restaurant *aRestaurant;
@@ -55,6 +55,18 @@
         self.restaurant = aRestaurant;
     }
     return self.restaurant;
+}
+
+- (Waiter *)newWaiter:(NSString *)name {
+    AppDelegate *appDelegate = [UIApplication sharedApplication].delegate;
+    NSEntityDescription *waiterEntity = [NSEntityDescription entityForName:@"Waiter" inManagedObjectContext:appDelegate.managedObjectContext];
+    Waiter *newWaiter = [[Waiter alloc]initWithEntity:waiterEntity insertIntoManagedObjectContext:appDelegate.managedObjectContext];
+    newWaiter.name = NSLocalizedString(name, nil);
+    Restaurant *restaurant = [[RestaurantManager sharedManager] currentRestaurant];
+    [restaurant addStaffObject:newWaiter];
+    NSError *error = nil;
+    [appDelegate.managedObjectContext save:&error];
+    return newWaiter;
 }
 
 @end
