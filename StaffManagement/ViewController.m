@@ -16,7 +16,6 @@ static NSString * const kCellIdentifier = @"CellIdentifier";
 
 @interface ViewController ()
 
-@property IBOutlet UITableView *tableView;
 @property (nonatomic, retain) NSMutableArray *waiters;
 
 @end
@@ -29,6 +28,7 @@ static NSString * const kCellIdentifier = @"CellIdentifier";
     [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:kCellIdentifier];
     NSSortDescriptor *sortByName = [[NSSortDescriptor alloc]initWithKey:@"name" ascending:YES];
     self.waiters = [[[[RestaurantManager sharedManager]currentRestaurant].staff sortedArrayUsingDescriptors:@[sortByName]] mutableCopy];
+    self.navigationItem.leftBarButtonItem = self.editButtonItem;
 }
 
 - (void)didReceiveMemoryWarning {
@@ -51,6 +51,17 @@ static NSString * const kCellIdentifier = @"CellIdentifier";
     Waiter *waiter = self.waiters[indexPath.row];
     cell.textLabel.text = waiter.name;
     return cell;
+}
+
+- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
+    return YES;
+}
+
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
+    if (editingStyle == UITableViewCellEditingStyleDelete) {
+        NSLog(@"DELETE!");
+        // TODO: Delete corresponding objects from waiters array and data store
+    }
 }
 
 
