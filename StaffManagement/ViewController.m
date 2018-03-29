@@ -59,8 +59,9 @@ static NSString * const kCellIdentifier = @"CellIdentifier";
 
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
     if (editingStyle == UITableViewCellEditingStyleDelete) {
-        NSLog(@"DELETE!");
-        // TODO: Delete corresponding objects from waiters array and data store
+        [self.waiters removeObjectAtIndex:indexPath.row];
+        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:YES];
+        // TODO: Delete corresponding objects from data store
     }
 }
 
@@ -73,8 +74,8 @@ static NSString * const kCellIdentifier = @"CellIdentifier";
         // TODO: Check if valid entry
         NSString *newWaiterName = [alert.textFields.firstObject.text stringByTrimmingCharactersInSet:NSCharacterSet.whitespaceAndNewlineCharacterSet];
         Waiter *newWaiter = [[RestaurantManager sharedManager] newWaiter:newWaiterName];
-        [self.waiters addObject:newWaiter];
-        // TODO: Sort by name before reload
+        NSSortDescriptor *sortByName = [[NSSortDescriptor alloc]initWithKey:@"name" ascending:YES];
+        self.waiters = [[[[RestaurantManager sharedManager]currentRestaurant].staff sortedArrayUsingDescriptors:@[sortByName]] mutableCopy];
         [self.tableView reloadData];
     }];
     [alert addAction:addAction];
