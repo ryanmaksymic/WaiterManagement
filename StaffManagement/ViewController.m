@@ -57,11 +57,27 @@ static NSString * const kCellIdentifier = @"CellIdentifier";
 # pragma mark - Actions
 
 - (IBAction)addWaiter:(UIBarButtonItem *)sender {
-    // TODO: Alert to collect name
-    Waiter *newWaiter = [[RestaurantManager sharedManager] newWaiter:@"Jane Doe"];
-    [self.waiters addObject:newWaiter];
-    // TODO: Sort by name before reload
-    [self.tableView reloadData];
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"New Waiter" message:@"Enter new waiter's name" preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertAction *addAction = [UIAlertAction actionWithTitle:@"Add" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        // TODO: Check if valid entry
+        // TODO: Trim whitespace
+        Waiter *newWaiter = [[RestaurantManager sharedManager] newWaiter:alert.textFields.firstObject.text];
+        [self.waiters addObject:newWaiter];
+        // TODO: Sort by name before reload
+        [self.tableView reloadData];
+    }];
+    [alert addAction:addAction];
+    UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:nil];
+    [alert addAction:cancelAction];
+    [alert addTextFieldWithConfigurationHandler:^(UITextField * _Nonnull textField) {
+        textField.textContentType = UITextContentTypeName;
+        textField.returnKeyType = UIReturnKeyDone;
+        textField.autocapitalizationType = UITextAutocapitalizationTypeWords;
+        textField.textAlignment = NSTextAlignmentCenter;
+        textField.placeholder = @"e.g. Jane Doe";
+        textField.clearButtonMode = UITextFieldViewModeWhileEditing;
+    }];
+    [self presentViewController:alert animated:YES completion:nil];
 }
 
 @end
