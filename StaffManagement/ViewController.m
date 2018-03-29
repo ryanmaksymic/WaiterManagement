@@ -60,8 +60,8 @@ static NSString * const kCellIdentifier = @"CellIdentifier";
     UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"New Waiter" message:@"Enter new waiter's name" preferredStyle:UIAlertControllerStyleAlert];
     UIAlertAction *addAction = [UIAlertAction actionWithTitle:@"Add" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         // TODO: Check if valid entry
-        // TODO: Trim whitespace
-        Waiter *newWaiter = [[RestaurantManager sharedManager] newWaiter:alert.textFields.firstObject.text];
+        NSString *newWaiterName = [alert.textFields.firstObject.text stringByTrimmingCharactersInSet:NSCharacterSet.whitespaceAndNewlineCharacterSet];
+        Waiter *newWaiter = [[RestaurantManager sharedManager] newWaiter:newWaiterName];
         [self.waiters addObject:newWaiter];
         // TODO: Sort by name before reload
         [self.tableView reloadData];
