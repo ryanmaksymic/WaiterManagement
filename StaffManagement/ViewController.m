@@ -11,6 +11,7 @@
 #import "Restaurant.h"
 #import "RestaurantManager.h"
 #import "Waiter.h"
+#import "StaffManagement-Swift.h"
 
 static NSString * const kCellIdentifier = @"CellIdentifier";
 
@@ -92,6 +93,19 @@ static NSString * const kCellIdentifier = @"CellIdentifier";
         textField.clearButtonMode = UITextFieldViewModeWhileEditing;
     }];
     [self presentViewController:alert animated:YES completion:nil];
+}
+
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    [self performSegueWithIdentifier:@"ShowShifts" sender:nil];
+}
+
+
+# pragma mark - Navigation
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    ShiftsTableViewController *stvc = segue.destinationViewController;
+    Waiter * selectedWaiter = self.waiters[self.tableView.indexPathForSelectedRow.row];
+    stvc.waiter = selectedWaiter;
 }
 
 @end
