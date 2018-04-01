@@ -15,5 +15,6 @@
 + (id)sharedManager;
 - (Restaurant*)currentRestaurant;
 - (Waiter *)newWaiter:(NSString *)name;
+- (void)deleteWaiter:(Waiter *)waiter;
 
 @end

@@ -69,4 +69,12 @@
     return newWaiter;
 }
 
+- (void)deleteWaiter:(Waiter *)waiter {
+    NSLog(@"Delete!");
+    AppDelegate *appDelegate = [UIApplication sharedApplication].delegate;
+    [appDelegate.managedObjectContext deleteObject:waiter];
+    NSError *error = nil;
+    [appDelegate.managedObjectContext save:&error];
+}
+
 @end

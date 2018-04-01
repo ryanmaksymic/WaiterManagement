@@ -59,9 +59,10 @@ static NSString * const kCellIdentifier = @"CellIdentifier";
 
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
     if (editingStyle == UITableViewCellEditingStyleDelete) {
-        [self.waiters removeObjectAtIndex:indexPath.row];
+        Waiter *waiterToDelete = [self.waiters objectAtIndex:indexPath.row];
+        [[RestaurantManager sharedManager] deleteWaiter:waiterToDelete];
+        [self.waiters removeObject:waiterToDelete];
         [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:YES];
-        // TODO: Delete corresponding objects from data store
     }
 }
 
@@ -73,7 +74,7 @@ static NSString * const kCellIdentifier = @"CellIdentifier";
     UIAlertAction *addAction = [UIAlertAction actionWithTitle:@"Add" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         // TODO: Check if valid entry
         NSString *newWaiterName = [alert.textFields.firstObject.text stringByTrimmingCharactersInSet:NSCharacterSet.whitespaceAndNewlineCharacterSet];
-        Waiter *newWaiter = [[RestaurantManager sharedManager] newWaiter:newWaiterName];
+        [[RestaurantManager sharedManager] newWaiter:newWaiterName];
         NSSortDescriptor *sortByName = [[NSSortDescriptor alloc]initWithKey:@"name" ascending:YES];
         self.waiters = [[[[RestaurantManager sharedManager]currentRestaurant].staff sortedArrayUsingDescriptors:@[sortByName]] mutableCopy];
         [self.tableView reloadData];
