@@ -14,6 +14,7 @@
 #import "StaffManagement-Swift.h"
 
 static NSString * const kCellIdentifier = @"CellIdentifier";
+static NSString * const kShowShiftsSegue = @"ShowShiftsSegue";
 
 @interface ViewController ()
 
@@ -96,7 +97,7 @@ static NSString * const kCellIdentifier = @"CellIdentifier";
 }
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    [self performSegueWithIdentifier:@"ShowShifts" sender:nil];
+    [self performSegueWithIdentifier:kShowShiftsSegue sender:nil];
 }
 
 
