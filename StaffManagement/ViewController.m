@@ -77,7 +77,8 @@ static NSString * const kShowShiftsSegue = @"ShowShiftsSegue";
 
 - (IBAction)addWaiter:(UIBarButtonItem *)sender {
     UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"New Waiter" message:@"Enter new waiter's name" preferredStyle:UIAlertControllerStyleAlert];
-    UIAlertAction *addAction = [UIAlertAction actionWithTitle:@"Add" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+    
+    UIAlertAction *addWaiterAction = [UIAlertAction actionWithTitle:@"Add" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         NSString *newWaiterName = [alert.textFields.firstObject.text stringByTrimmingCharactersInSet:NSCharacterSet.whitespaceCharacterSet];
         Waiter *newWaiter = [[RestaurantManager sharedManager] newWaiter:newWaiterName];
         NSSortDescriptor *sortByName = [[NSSortDescriptor alloc]initWithKey:@"name" ascending:YES];
@@ -85,19 +86,22 @@ static NSString * const kShowShiftsSegue = @"ShowShiftsSegue";
         NSIndexPath * newWaiterIndex = [NSIndexPath indexPathForRow:[self.waiters indexOfObject:newWaiter] inSection:0];
         [self.tableView insertRowsAtIndexPaths:@[newWaiterIndex] withRowAnimation:YES];
     }];
-    [alert addAction:addAction];
-    addAction.enabled = NO;
+    [alert addAction:addWaiterAction];
+    addWaiterAction.enabled = NO;  // Enabled only when text field is not empty
+    
     UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:nil];
     [alert addAction:cancelAction];
+    
     [alert addTextFieldWithConfigurationHandler:^(UITextField * _Nonnull textField) {
         textField.textContentType = UITextContentTypeName;
         textField.returnKeyType = UIReturnKeyDone;
         textField.autocapitalizationType = UITextAutocapitalizationTypeWords;
         textField.textAlignment = NSTextAlignmentCenter;
-        textField.placeholder = @"e.g. Jane Doe";
+        textField.placeholder = @"e.g. Jane Peters";
         textField.clearButtonMode = UITextFieldViewModeWhileEditing;
         [textField addTarget:self action:@selector(alertTextFieldDidChange:) forControlEvents:UIControlEventEditingChanged];
     }];
+    
     [self presentViewController:alert animated:YES completion:nil];
 }
 
@@ -114,9 +118,11 @@ static NSString * const kShowShiftsSegue = @"ShowShiftsSegue";
 # pragma mark - Navigation
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    ShiftsTableViewController *stvc = segue.destinationViewController;
-    Waiter * selectedWaiter = self.waiters[self.tableView.indexPathForSelectedRow.row];
-    stvc.waiter = selectedWaiter;
+    if ([segue.identifier isEqualToString:kShowShiftsSegue]) {
+        Waiter * selectedWaiter = self.waiters[self.tableView.indexPathForSelectedRow.row];
+        ShiftsTableViewController *stvc = segue.destinationViewController;
+        stvc.waiter = selectedWaiter;
+    }
 }
 
 @end

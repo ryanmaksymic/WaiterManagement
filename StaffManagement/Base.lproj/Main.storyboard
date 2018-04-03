@@ -74,7 +74,7 @@
                     <navigationItem key="navigationItem" title="&lt;Waiter's Name&gt;'s Shifts" id="Zty-BY-EOE">
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="Riz-4J-D3k">
                             <connections>
-                                <segue destination="Eci-0b-Kvr" kind="presentation" id="ttF-mN-zIx"/>
+                                <segue destination="Eci-0b-Kvr" kind="presentation" identifier="PresentNewShiftSegue" id="ttF-mN-zIx"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>

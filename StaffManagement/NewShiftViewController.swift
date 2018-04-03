@@ -25,9 +25,6 @@ class NewShiftViewController: UIViewController {
     }
     
     
-    // TODO: startTimePicker cannot have value earlier than endTimePicker, and vice versa
-    
-    
     // MARK: - Actions
     
     @IBAction func cancelNewShift(_ sender: UIBarButtonItem) {

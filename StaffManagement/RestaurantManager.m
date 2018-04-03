@@ -35,7 +35,7 @@
     {
         Restaurant *aRestaurant;
         NSError *error = nil;
-        AppDelegate *appDelegate = [UIApplication sharedApplication].delegate;
+        AppDelegate *appDelegate = (AppDelegate *)[UIApplication sharedApplication].delegate;
         NSFetchRequest *request = [[NSFetchRequest alloc]initWithEntityName:@"Restaurant"];
         NSArray *results = [appDelegate.managedObjectContext executeFetchRequest:request error:&error];
         
@@ -59,27 +59,25 @@
 }
 
 - (Waiter *)newWaiter:(NSString *)name {
-    AppDelegate *appDelegate = [UIApplication sharedApplication].delegate;
+    AppDelegate *appDelegate = (AppDelegate *)[UIApplication sharedApplication].delegate;
     NSEntityDescription *waiterEntity = [NSEntityDescription entityForName:@"Waiter" inManagedObjectContext:appDelegate.managedObjectContext];
     Waiter *newWaiter = [[Waiter alloc]initWithEntity:waiterEntity insertIntoManagedObjectContext:appDelegate.managedObjectContext];
     newWaiter.name = NSLocalizedString(name, nil);
-    Restaurant *restaurant = [[RestaurantManager sharedManager] currentRestaurant];
-    [restaurant addStaffObject:newWaiter];
+    [[[RestaurantManager sharedManager] currentRestaurant] addStaffObject:newWaiter];
     NSError *error = nil;
     [appDelegate.managedObjectContext save:&error];
     return newWaiter;
 }
 
 - (void)deleteWaiter:(Waiter *)waiter {
-    AppDelegate *appDelegate = [UIApplication sharedApplication].delegate;
+    AppDelegate *appDelegate = (AppDelegate *)[UIApplication sharedApplication].delegate;
     [appDelegate.managedObjectContext deleteObject:waiter];
     NSError *error = nil;
     [appDelegate.managedObjectContext save:&error];
 }
 
-// TODO: See if this method can be moved elsewhere; ideally wouldn't need to take a waiter as an argument...
 - (Shift *)newShiftFrom:(NSDate *)startTime to:(NSDate *)endTime for:(Waiter *)waiter {
-    AppDelegate *appDelegate = [UIApplication sharedApplication].delegate;
+    AppDelegate *appDelegate = (AppDelegate *)[UIApplication sharedApplication].delegate;
     NSEntityDescription *shiftEntity = [NSEntityDescription entityForName:@"Shift" inManagedObjectContext:appDelegate.managedObjectContext];
     Shift *newShift = [[Shift alloc] initWithEntity:shiftEntity insertIntoManagedObjectContext:appDelegate.managedObjectContext];
     newShift.startTime = startTime;

@@ -11,6 +11,7 @@ import UIKit
 class ShiftsTableViewController: UITableViewController {
     
     let kShiftCellIdentifier = "ShiftCellIdentifier"
+    let kPresentNewShiftSegue = "PresentNewShiftSegue"
     var waiter : Waiter!
     var shifts = [Shift]()
     
@@ -57,8 +58,10 @@ class ShiftsTableViewController: UITableViewController {
     // MARK: - Navigation
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        let nav = segue.destination as! UINavigationController
-        let nsvc = nav.viewControllers.first as! NewShiftViewController
-        nsvc.delegate = self
+        if segue.identifier == kPresentNewShiftSegue {
+            let nc = segue.destination as! UINavigationController
+            let nsvc = nc.viewControllers.first as! NewShiftViewController
+            nsvc.delegate = self
+        }
     }
 }
