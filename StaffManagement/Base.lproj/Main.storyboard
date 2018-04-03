@@ -47,7 +47,7 @@
             </objects>
             <point key="canvasLocation" x="482" y="422"/>
         </scene>
-        <!--Title-->
+        <!--<Waiter's Name>'s Shifts-->
         <scene sceneID="HBX-39-zeO">
             <objects>
                 <tableViewController id="KOs-Fj-88T" customClass="ShiftsTableViewController" customModule="StaffManagement" customModuleProvider="target" sceneMemberID="viewController">
@@ -70,7 +70,7 @@
                             <outlet property="delegate" destination="KOs-Fj-88T" id="d2C-GP-8a9"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Title" id="Zty-BY-EOE">
+                    <navigationItem key="navigationItem" title="&lt;Waiter's Name&gt;'s Shifts" id="Zty-BY-EOE">
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="Riz-4J-D3k">
                             <connections>
                                 <segue destination="Eci-0b-Kvr" kind="presentation" id="ttF-mN-zIx"/>
@@ -85,7 +85,7 @@
         <!--New Shift-->
         <scene sceneID="AsM-0P-ou2">
             <objects>
-                <viewController title="New Shift" id="VWJ-SV-I5F" sceneMemberID="viewController">
+                <viewController title="New Shift" id="VWJ-SV-I5F" customClass="NewShiftViewController" customModule="StaffManagement" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="HxW-XZ-Ohg"/>
                         <viewControllerLayoutGuide type="bottom" id="keD-A0-mgG"/>
@@ -143,6 +143,11 @@
                         <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="WXG-i7-4Qi"/>
                         <barButtonItem key="rightBarButtonItem" systemItem="save" id="ka7-Vi-Nsh"/>
                     </navigationItem>
+                    <connections>
+                        <outlet property="datePicker" destination="0PE-Xg-pVY" id="yHW-us-YHL"/>
+                        <outlet property="endTimePicker" destination="Z2P-ic-apS" id="4VV-oU-5s0"/>
+                        <outlet property="startTimePicker" destination="62f-b3-cQN" id="i2y-XW-saS"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="vac-2T-I7w" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
