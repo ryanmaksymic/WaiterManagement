@@ -13,10 +13,12 @@ class ShiftsTableViewController: UITableViewController {
     let kShiftCellIdentifier = "ShiftCellIdentifier"
     
     var waiter : Waiter!
+    var shifts : [Shift]!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         self.navigationItem.title = "\(waiter.name!)'s Shifts"
+        shifts = Array(waiter.shifts) as! [Shift]
     }
     
     override func didReceiveMemoryWarning() {
@@ -31,11 +33,13 @@ class ShiftsTableViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 10
+        return shifts.count
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: kShiftCellIdentifier, for: indexPath)
+        let shift = shifts[indexPath.row]
+        cell.textLabel?.text = "\(shift.startTime!) to \(shift.endTime!)"
         return cell
     }
     
