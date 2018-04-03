@@ -8,8 +8,6 @@
 
 import UIKit
 
-// TODO: Auto Layout
-
 class NewShiftViewController: UIViewController {
     
     @IBOutlet weak var startTimePicker: UIDatePicker!

@@ -75,7 +75,6 @@ static NSString * const kShowShiftsSegue = @"ShowShiftsSegue";
 
 # pragma mark - Actions
 
-// TODO: Disable Save button while text field is empty
 - (IBAction)addWaiter:(UIBarButtonItem *)sender {
     UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"New Waiter" message:@"Enter new waiter's name" preferredStyle:UIAlertControllerStyleAlert];
     UIAlertAction *addAction = [UIAlertAction actionWithTitle:@"Add" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
