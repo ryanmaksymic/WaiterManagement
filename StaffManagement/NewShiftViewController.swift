@@ -10,7 +10,6 @@ import UIKit
 
 class NewShiftViewController: UIViewController {
     
-    @IBOutlet weak var datePicker: UIDatePicker!
     @IBOutlet weak var startTimePicker: UIDatePicker!
     @IBOutlet weak var endTimePicker: UIDatePicker!
     

@@ -76,10 +76,11 @@ static NSString * const kShowShiftsSegue = @"ShowShiftsSegue";
     UIAlertAction *addAction = [UIAlertAction actionWithTitle:@"Add" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         NSString *newWaiterName = [alert.textFields.firstObject.text stringByTrimmingCharactersInSet:NSCharacterSet.whitespaceAndNewlineCharacterSet];
         if (![newWaiterName isEqualToString:@""]) {
-            [[RestaurantManager sharedManager] newWaiter:newWaiterName];
+            Waiter *newWaiter = [[RestaurantManager sharedManager] newWaiter:newWaiterName];
             NSSortDescriptor *sortByName = [[NSSortDescriptor alloc]initWithKey:@"name" ascending:YES];
             self.waiters = [[[[RestaurantManager sharedManager]currentRestaurant].staff sortedArrayUsingDescriptors:@[sortByName]] mutableCopy];
-            [self.tableView reloadData];
+            NSIndexPath * newWaiterIndex = [NSIndexPath indexPathForRow:[self.waiters indexOfObject:newWaiter] inSection:0];
+            [self.tableView insertRowsAtIndexPaths:@[newWaiterIndex] withRowAnimation:YES];
         }
     }];
     [alert addAction:addAction];

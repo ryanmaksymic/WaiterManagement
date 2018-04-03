@@ -19,6 +19,7 @@
 		651CBBDA1AB4E4A000F265E8 /* Restaurant.m in Sources */ = {isa = PBXBuildFile; fileRef = 651CBBD91AB4E4A000F265E8 /* Restaurant.m */; };
 		651CBBDD1AB4E4A100F265E8 /* Waiter.m in Sources */ = {isa = PBXBuildFile; fileRef = 651CBBDC1AB4E4A100F265E8 /* Waiter.m */; };
 		FE32E621207311F300FFDAF7 /* NewShiftViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE32E620207311F300FFDAF7 /* NewShiftViewController.swift */; };
+		FE32E63020731E4200FFDAF7 /* Shift.m in Sources */ = {isa = PBXBuildFile; fileRef = FE32E62F20731E4200FFDAF7 /* Shift.m */; };
 		FEAF339D2070D18E00F227D8 /* ShiftsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEAF339C2070D18E00F227D8 /* ShiftsTableViewController.swift */; };
 /* End PBXBuildFile section */
 
@@ -54,6 +55,8 @@
 		651CBBDB1AB4E4A100F265E8 /* Waiter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Waiter.h; sourceTree = "<group>"; };
 		651CBBDC1AB4E4A100F265E8 /* Waiter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Waiter.m; sourceTree = "<group>"; };
 		FE32E620207311F300FFDAF7 /* NewShiftViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewShiftViewController.swift; sourceTree = "<group>"; };
+		FE32E62E20731E4200FFDAF7 /* Shift.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Shift.h; sourceTree = "<group>"; };
+		FE32E62F20731E4200FFDAF7 /* Shift.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Shift.m; sourceTree = "<group>"; };
 		FEAF339B2070D18D00F227D8 /* StaffManagement-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "StaffManagement-Bridging-Header.h"; sourceTree = "<group>"; };
 		FEAF339C2070D18E00F227D8 /* ShiftsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShiftsTableViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -145,6 +148,8 @@
 			isa = PBXGroup;
 			children = (
 				651CBBB31AB4E1CD00F265E8 /* StaffManagement.xcdatamodeld */,
+				FE32E62E20731E4200FFDAF7 /* Shift.h */,
+				FE32E62F20731E4200FFDAF7 /* Shift.m */,
 				651CBBDB1AB4E4A100F265E8 /* Waiter.h */,
 				651CBBDC1AB4E4A100F265E8 /* Waiter.m */,
 				651CBBD81AB4E4A000F265E8 /* Restaurant.h */,
@@ -258,6 +263,7 @@
 				651CBBB51AB4E1CD00F265E8 /* StaffManagement.xcdatamodeld in Sources */,
 				FEAF339D2070D18E00F227D8 /* ShiftsTableViewController.swift in Sources */,
 				651CBBB21AB4E1CC00F265E8 /* AppDelegate.m in Sources */,
+				FE32E63020731E4200FFDAF7 /* Shift.m in Sources */,
 				651CBBB81AB4E1CD00F265E8 /* ViewController.m in Sources */,
 				FE32E621207311F300FFDAF7 /* NewShiftViewController.swift in Sources */,
 				651CBBDD1AB4E4A100F265E8 /* Waiter.m in Sources */,
