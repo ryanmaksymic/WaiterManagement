@@ -107,7 +107,7 @@ static NSString * const kShowShiftsSegue = @"ShowShiftsSegue";
     if (alert) {
         UITextField *textField = alert.textFields.firstObject;
         UIAlertAction *addAction = alert.actions.firstObject;
-        addAction.enabled = textField.text.length > 0;
+        addAction.enabled = [textField.text stringByTrimmingCharactersInSet:NSCharacterSet.whitespaceAndNewlineCharacterSet].length > 0;
     }
 }
 
