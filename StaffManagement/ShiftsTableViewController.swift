@@ -11,14 +11,20 @@ import UIKit
 class ShiftsTableViewController: UITableViewController {
     
     let kShiftCellIdentifier = "ShiftCellIdentifier"
-    
     var waiter : Waiter!
-    var shifts : [Shift]!
+    var shifts = [Shift]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         self.navigationItem.title = "\(waiter.name!)'s Shifts"
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
         shifts = Array(waiter.shifts) as! [Shift]
+        shifts.sort { (shift1, shift2) -> Bool in
+            return shift1.startTime < shift2.startTime
+        }
+        tableView.reloadData()
     }
     
     override func didReceiveMemoryWarning() {
@@ -42,24 +48,6 @@ class ShiftsTableViewController: UITableViewController {
         cell.textLabel?.text = "\(shift.startTime!) to \(shift.endTime!)"
         return cell
     }
-    
-    /*
-     // Override to support conditional editing of the table view.
-     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-     // Return false if you do not want the specified item to be editable.
-     return true
-     }
-     
-     // Override to support editing the table view.
-     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
-     if editingStyle == .delete {
-     // Delete the row from the data source
-     tableView.deleteRows(at: [indexPath], with: .fade)
-     } else if editingStyle == .insert {
-     // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-     }
-     }
-     */
     
     
     // MARK: - Navigation
