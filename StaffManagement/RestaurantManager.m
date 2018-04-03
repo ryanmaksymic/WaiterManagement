@@ -8,6 +8,7 @@
 
 #import "RestaurantManager.h"
 #import "AppDelegate.h"
+#import "Shift.h"
 #import "Waiter.h"
 #import "Restaurant.h"
 
@@ -74,6 +75,18 @@
     [appDelegate.managedObjectContext deleteObject:waiter];
     NSError *error = nil;
     [appDelegate.managedObjectContext save:&error];
+}
+
+- (Shift *)newShiftFrom:(NSDate *)startTime to:(NSDate *)endTime for:(Waiter *)waiter {
+    AppDelegate *appDelegate = [UIApplication sharedApplication].delegate;
+    NSEntityDescription *shiftEntity = [NSEntityDescription entityForName:@"Shift" inManagedObjectContext:appDelegate.managedObjectContext];
+    Shift *newShift = [[Shift alloc] initWithEntity:shiftEntity insertIntoManagedObjectContext:appDelegate.managedObjectContext];
+    newShift.startTime = startTime;
+    newShift.endTime = endTime;
+    [waiter addShiftsObject:newShift];
+    NSError *error = nil;
+    [appDelegate.managedObjectContext save:&error];
+    return newShift;
 }
 
 @end
