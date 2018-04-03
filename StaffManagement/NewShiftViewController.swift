@@ -8,6 +8,8 @@
 
 import UIKit
 
+// TODO: Auto Layout
+
 class NewShiftViewController: UIViewController {
     
     @IBOutlet weak var startTimePicker: UIDatePicker!
@@ -19,10 +21,13 @@ class NewShiftViewController: UIViewController {
         super.viewDidLoad()
         endTimePicker.date = startTimePicker.date + TimeInterval(60*60*8)
     }
-
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
     }
+    
+    
+    // TODO: startTimePicker cannot have value earlier than endTimePicker, and vice versa
     
     
     // MARK: - Actions
@@ -36,15 +41,4 @@ class NewShiftViewController: UIViewController {
         restaurantManager.newShift(from: startTimePicker.date, to: endTimePicker.date, for: delegate.waiter)
         dismiss(animated: true, completion: nil)
     }
-    
-    
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
 }

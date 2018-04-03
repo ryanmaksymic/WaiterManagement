@@ -77,6 +77,7 @@
     [appDelegate.managedObjectContext save:&error];
 }
 
+// TODO: See if this method can be moved elsewhere; ideally wouldn't need to take a waiter as an argument...
 - (Shift *)newShiftFrom:(NSDate *)startTime to:(NSDate *)endTime for:(Waiter *)waiter {
     AppDelegate *appDelegate = [UIApplication sharedApplication].delegate;
     NSEntityDescription *shiftEntity = [NSEntityDescription entityForName:@"Shift" inManagedObjectContext:appDelegate.managedObjectContext];

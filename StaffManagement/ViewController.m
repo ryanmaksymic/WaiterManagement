@@ -68,22 +68,26 @@ static NSString * const kShowShiftsSegue = @"ShowShiftsSegue";
     }
 }
 
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    [self performSegueWithIdentifier:kShowShiftsSegue sender:nil];
+}
+
 
 # pragma mark - Actions
 
+// TODO: Disable Save button while text field is empty
 - (IBAction)addWaiter:(UIBarButtonItem *)sender {
     UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"New Waiter" message:@"Enter new waiter's name" preferredStyle:UIAlertControllerStyleAlert];
     UIAlertAction *addAction = [UIAlertAction actionWithTitle:@"Add" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-        NSString *newWaiterName = [alert.textFields.firstObject.text stringByTrimmingCharactersInSet:NSCharacterSet.whitespaceAndNewlineCharacterSet];
-        if (![newWaiterName isEqualToString:@""]) {
-            Waiter *newWaiter = [[RestaurantManager sharedManager] newWaiter:newWaiterName];
-            NSSortDescriptor *sortByName = [[NSSortDescriptor alloc]initWithKey:@"name" ascending:YES];
-            self.waiters = [[[[RestaurantManager sharedManager]currentRestaurant].staff sortedArrayUsingDescriptors:@[sortByName]] mutableCopy];
-            NSIndexPath * newWaiterIndex = [NSIndexPath indexPathForRow:[self.waiters indexOfObject:newWaiter] inSection:0];
-            [self.tableView insertRowsAtIndexPaths:@[newWaiterIndex] withRowAnimation:YES];
-        }
+        NSString *newWaiterName = [alert.textFields.firstObject.text stringByTrimmingCharactersInSet:NSCharacterSet.whitespaceCharacterSet];
+        Waiter *newWaiter = [[RestaurantManager sharedManager] newWaiter:newWaiterName];
+        NSSortDescriptor *sortByName = [[NSSortDescriptor alloc]initWithKey:@"name" ascending:YES];
+        self.waiters = [[[[RestaurantManager sharedManager]currentRestaurant].staff sortedArrayUsingDescriptors:@[sortByName]] mutableCopy];
+        NSIndexPath * newWaiterIndex = [NSIndexPath indexPathForRow:[self.waiters indexOfObject:newWaiter] inSection:0];
+        [self.tableView insertRowsAtIndexPaths:@[newWaiterIndex] withRowAnimation:YES];
     }];
     [alert addAction:addAction];
+    addAction.enabled = NO;
     UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:nil];
     [alert addAction:cancelAction];
     [alert addTextFieldWithConfigurationHandler:^(UITextField * _Nonnull textField) {
@@ -93,12 +97,18 @@ static NSString * const kShowShiftsSegue = @"ShowShiftsSegue";
         textField.textAlignment = NSTextAlignmentCenter;
         textField.placeholder = @"e.g. Jane Doe";
         textField.clearButtonMode = UITextFieldViewModeWhileEditing;
+        [textField addTarget:self action:@selector(alertTextFieldDidChange:) forControlEvents:UIControlEventEditingChanged];
     }];
     [self presentViewController:alert animated:YES completion:nil];
 }
 
--(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    [self performSegueWithIdentifier:kShowShiftsSegue sender:nil];
+- (void)alertTextFieldDidChange:(UITextField *)sender {
+    UIAlertController *alert = (UIAlertController *)self.presentedViewController;
+    if (alert) {
+        UITextField *textField = alert.textFields.firstObject;
+        UIAlertAction *addAction = alert.actions.firstObject;
+        addAction.enabled = textField.text.length > 0;
+    }
 }
 
 

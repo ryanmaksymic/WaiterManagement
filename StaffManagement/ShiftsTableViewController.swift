@@ -46,8 +46,10 @@ class ShiftsTableViewController: UITableViewController {
         let cell = tableView.dequeueReusableCell(withIdentifier: kShiftCellIdentifier, for: indexPath)
         let shift = shifts[indexPath.row]
         let dateFormatter = DateFormatter()
-        dateFormatter.timeStyle = .short
-        cell.textLabel?.text = "\(dateFormatter.string(from: shift.startTime)) to \(dateFormatter.string(from: shift.endTime))"
+        dateFormatter.dateStyle = .medium
+        let timeFormatter = DateFormatter()
+        timeFormatter.timeStyle = .short
+        cell.textLabel?.text = "\(dateFormatter.string(from: shift.startTime)): \(timeFormatter.string(from: shift.startTime)) to \(timeFormatter.string(from: shift.endTime))"
         return cell
     }
     
